@@ -64,11 +64,11 @@
 		</div>
 	</div>
 
-	<footer class="grid grid-cols-[1fr_auto] p-4 text-sm">
-		<div>
-			<p class="text-sm text-slate-500">© {year} ChrisJosh</p>
+	<footer class="flex flex-col-reverse md:flex-row gap-4 grid-cols p-4 text-sm">
+		<div class="flex-grow-1">
+			<p class="text-sm text-slate-500">&copy; {year} ChrisJosh</p>
 		</div>
-		<div class="flex items-center gap-4">
+		<div class="flex items-center flex-col md:flex-row gap-4">
 			{#each socials as social (social.label)}
 				<a
 					href={social.href}
