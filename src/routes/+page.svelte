@@ -41,13 +41,13 @@
 			</h1>
 
 			<p class="mt-4 text-lg text-pretty text-slate-300 sm:text-xl">
-				Frontend & Full‑Stack Engineer
+				Software Engineer
 			</p>
 
 			<p
 				class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-pretty text-slate-400 sm:text-lg"
 			>
-				Building performant, intuitive, and user‑centered digital experiences with modern web tech.
+				Building performant, intuitive, and user‑centered digital experiences with modern web technology.
 			</p>
 
 			<div class="mt-8 flex hidden flex-wrap items-center justify-center gap-2">
