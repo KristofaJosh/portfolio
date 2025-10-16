@@ -64,11 +64,14 @@
 		</div>
 	</div>
 
-	<footer class="flex flex-col-reverse md:flex-row gap-4 grid-cols p-4 text-sm">
+	<footer class="grid-cols flex flex-col-reverse gap-4 p-4 text-sm md:flex-row">
 		<div class="flex-grow-1">
-			<p class="text-sm text-slate-500">&copy; {year} ChrisJosh</p>
+			<p class="text-sm text-slate-500">
+				&copy; {year} ChrisJosh | Built with
+				<a class="underline" href="https://svelte.dev/docs/kit/introduction">SvelteKit</a> ❤️
+			</p>
 		</div>
-		<div class="flex items-center flex-col md:flex-row gap-4">
+		<div class="flex flex-col items-center gap-4 md:flex-row">
 			{#each socials as social (social.label)}
 				<a
 					href={social.href}
@@ -81,10 +84,16 @@
 				</a>
 			{/each}
 			<a
-				href="https://docs.google.com/document/d/1K3aqYmDQN40f6VU83D53IiXq0MQm63gh0wKnzB4UtcE/export?format=pdf"
+				href="https://docs.google.com/document/d/1eEzF4OerbyvkHzUgnLfdpPt4NVeU6Z5PaxHIbBHHkHg/export?format=pdf"
 				download
 				class="flex items-center gap-1 text-slate-400 transition hover:text-white"
 				aria-label="Download CV"
+				on:click={() => {
+					// Lazy-import to keep this file SSR-safe and avoid bundling analytics in SSR
+					import('@vercel/analytics').then(({ track }) => {
+						track('cv_download', { location: 'footer', format: 'pdf' });
+					}).catch(() => {});
+				}}
 			>
 				<i class="devicon-google-plain"></i>
 				<span>Download CV</span>
