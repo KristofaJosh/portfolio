@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { cursorState } from '$lib/components/download-cv/cursor.svelte';
 	import OsEmblem from '$lib/components/os-emblem.svelte';
+	import posthog from 'posthog-js';
 
 	const onDownloadClick = async (event: MouseEvent) => {
 		event.preventDefault();
@@ -20,8 +21,7 @@
 			a.remove();
 			URL.revokeObjectURL(url);
 
-			const { track } = await import('@vercel/analytics');
-			track('cv_download', { location: 'footer', format: 'pdf' });
+			posthog.capture('cv_download_clicked');
 		} catch {
 			// TODO: track error
 		} finally {

@@ -687,6 +687,13 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.29.tgz#5a40109a1ab5f84d6fd8fc928b19f367cbe7e7b1"
   integrity sha512-wwQAWhWSuHaag8c4q/KN/vCoeOJYshAIvMQwD4GpSb3OiZklFfvAgmj0VCBBImRpuF/aFgIRzllXlVX93Jevww==
 
+"@posthog/core@1.5.2":
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/@posthog/core/-/core-1.5.2.tgz#06f1277c5ac9a3d5a17bc3800172a392e594f44c"
+  integrity sha512-iedUP3EnOPPxTA2VaIrsrd29lSZnUV+ZrMnvY56timRVeZAXoYCkmjfIs3KBAsF8OUT5h1GXLSkoQdrV0r31OQ==
+  dependencies:
+    cross-spawn "^7.0.6"
+
 "@rollup/rollup-android-arm-eabi@4.52.4":
   version "4.52.4"
   resolved "https://registry.yarnpkg.com/@rollup/rollup-android-arm-eabi/-/rollup-android-arm-eabi-4.52.4.tgz#59e7478d310f7e6a7c72453978f562483828112f"
@@ -1375,6 +1382,11 @@ cookie@^0.6.0:
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.6.0.tgz#2798b04b071b0ecbff0dbb62a505a8efa4e19051"
   integrity sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==
 
+core-js@^3.38.1:
+  version "3.46.0"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.46.0.tgz#323a092b96381a9184d0cd49ee9083b2f93373bb"
+  integrity sha512-vDMm9B0xnqqZ8uSBpZ8sNtRtOdmfShrvT6h2TuQGLs0Is+cR0DYbj/KWP6ALVNbWPpqA/qPLoOuppJN07humpA==
+
 core-util-is@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.3.tgz#a6042d3634c2b27e9328f837b965fac83808db85"
@@ -1719,6 +1731,11 @@ fdir@^6.2.0, fdir@^6.5.0:
   version "6.5.0"
   resolved "https://registry.yarnpkg.com/fdir/-/fdir-6.5.0.tgz#ed2ab967a331ade62f18d077dae192684d50d350"
   integrity sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==
+
+fflate@^0.4.8:
+  version "0.4.8"
+  resolved "https://registry.yarnpkg.com/fflate/-/fflate-0.4.8.tgz#f90b82aefbd8ac174213abb338bd7ef848f0f5ae"
+  integrity sha512-FJqqoDBR00Mdj9ppamLa/Y7vxm+PRmNWA67N846RvsoYVMKB4q3y/de5PA7gUmRMYK/8CMz2GDZQmCRN1wBcWA==
 
 file-entry-cache@^8.0.0:
   version "8.0.0"
@@ -2299,6 +2316,29 @@ postgres-interval@^1.1.0:
   dependencies:
     xtend "^4.0.0"
 
+posthog-js@^1.290.0:
+  version "1.290.0"
+  resolved "https://registry.yarnpkg.com/posthog-js/-/posthog-js-1.290.0.tgz#4181f0a56e7f4f0150d56bc8c783aaabb5297aa9"
+  integrity sha512-zavBwZkf+3JeiSDVE7ZDXBfzva/iOljicdhdJH+cZoqp0LsxjKxjnNhGOd3KpAhw0wqdwjhd7Lp1aJuI7DXyaw==
+  dependencies:
+    "@posthog/core" "1.5.2"
+    core-js "^3.38.1"
+    fflate "^0.4.8"
+    preact "^10.19.3"
+    web-vitals "^4.2.4"
+
+posthog-node@^5.11.2:
+  version "5.11.2"
+  resolved "https://registry.yarnpkg.com/posthog-node/-/posthog-node-5.11.2.tgz#4983d07c5a5bfee674576ce33204d5510db11059"
+  integrity sha512-z+XekcBUmGePMsjPlGaEF2bJFiDHKHYPQjS4OEw4YPDQz8s7Owuim/L7xNX+6UJkyIRniBza9iC7bW8yrGTv1g==
+  dependencies:
+    "@posthog/core" "1.5.2"
+
+preact@^10.19.3:
+  version "10.27.2"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.27.2.tgz#19b9009c1be801a76a0aaf0fe5ba665985a09312"
+  integrity sha512-5SYSgFKSyhCbk6SrXyMpqjb5+MQBgfvEKE/OC+PujcY34sOpqtr+0AZQtPYx5IA6VxynQ7rUPCtKzyovpj9Bpg==
+
 prelude-ls@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
@@ -2742,6 +2782,11 @@ vitest@^4.0.8:
     tinyrainbow "^3.0.3"
     vite "^6.0.0 || ^7.0.0"
     why-is-node-running "^2.3.0"
+
+web-vitals@^4.2.4:
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-4.2.4.tgz#1d20bc8590a37769bd0902b289550936069184b7"
+  integrity sha512-r4DIlprAGwJ7YM11VZp4R884m0Vmgr6EAKe3P+kO0PPj3Unqyvv59rczf6UiGcb9Z8QxZVcqKNwv/g0WNdWwsw==
 
 webpack-virtual-modules@^0.6.2:
   version "0.6.2"

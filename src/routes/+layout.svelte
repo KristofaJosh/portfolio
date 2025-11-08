@@ -8,7 +8,16 @@
 	import Footer from '$lib/components/footer.svelte';
 	import { twcn } from '~/utils/twcn';
 
+	import posthog from 'posthog-js';
+	import { browser } from '$app/environment';
+	import { afterNavigate } from '$app/navigation';
+
 	injectAnalytics({ mode: dev ? 'development' : 'production' });
+
+	if (browser) {
+		// beforeNavigate(() => posthog.capture('$pageleave'));
+		afterNavigate(() => posthog.capture('$pageview'));
+	}
 
 	let { children } = $props();
 </script>
@@ -33,5 +42,5 @@
 	<main class="p-4">
 		{@render children?.()}
 	</main>
-        <Footer />
+	<Footer />
 </section>

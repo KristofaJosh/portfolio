@@ -2,12 +2,15 @@
 	import DownloadCV from '$lib/components/download-cv/cv.svelte';
 	import OsEmblem from '$lib/components/os-emblem.svelte';
 	import { type DeskApps, deskApps } from '$lib/stores/desktop-apps.svelte';
+    import posthog from "posthog-js";
 
 	const apps = Object.values(deskApps).flat();
 	let deskBoundArea;
 
 	const onDesktopClick = (app: DeskApps) => {
-		return () => {
+        const evt = `${app.label}_clicked`.toLowerCase().replaceAll(' ','_')
+        posthog.capture(evt)
+        return () => {
 			if (app.href) window.open(app.href, '_blank');
 			if (app.link) {
 				//
