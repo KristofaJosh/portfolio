@@ -8,7 +8,7 @@
 			'relative z-10 grid w-full items-center rounded-lg p-6 gap-6',
 			'grid-cols-[auto_auto_1fr] text-white',
 			'transform -translate-y-8',
-			'mx-4',
+			'mx-4 hidden',
 		)}
 		style="perspective: 390px;"
 	>

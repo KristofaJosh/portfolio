@@ -1,5 +1,6 @@
 <script lang="ts">
-	import DownloadCV from '$lib/components/download-cv/cv.svelte';
+	import {browser} from "$app/environment";
+    import DownloadCV from '$lib/components/download-cv/cv.svelte';
 	import OsEmblem from '$lib/components/os-emblem.svelte';
 	import { type DeskApps, deskApps } from '$lib/stores/desktop-apps.svelte';
     import posthog from "posthog-js";
@@ -9,7 +10,7 @@
 
 	const onDesktopClick = (app: DeskApps) => {
         const evt = `${app.label}_clicked`.toLowerCase().replaceAll(' ','_')
-        posthog.capture(evt)
+        if(browser) posthog.capture(evt)
         return () => {
 			if (app.href) window.open(app.href, '_blank');
 			if (app.link) {

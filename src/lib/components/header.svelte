@@ -22,7 +22,7 @@
 	<div class="flex items-center w-full gap-6">
 		<p>Krisj<span class="font-semibold">OS</span>h</p>
 		<div class="flex gap-4 items-center flex-grow-1">
-            <a href="#">Blog</a>
+<!--            <a href="#">Blog</a>-->
 		</div>
 	</div>
 	<div>
