@@ -1,18 +1,19 @@
-<script>
-	const year = new Date().getFullYear();
-	const socials = [
-		{ href: 'https://github.com/KristofaJosh', label: 'GitHub', icon: 'devicon-github-original' },
-		{
-			href: 'https://www.linkedin.com/in/christofajosh',
-			label: 'LinkedIn',
-			icon: 'devicon-linkedin-plain'
-		},
-		{
-			href: 'https://stackoverflow.com/users/8149165/chris-josh',
-			label: 'Stack Overflow',
-			icon: 'devicon-stackoverflow-plain'
-		}
-	];
+<script lang="ts">
+	import DownloadCV from '$lib/components/download-cv/cv.svelte';
+	import OsEmblem from '$lib/components/os-emblem.svelte';
+	import { type DeskApps, deskApps } from '$lib/stores/desktop-apps.svelte';
+
+	const apps = Object.values(deskApps).flat();
+	let deskBoundArea;
+
+	const onDesktopClick = (app: DeskApps) => {
+		return () => {
+			if (app.href) window.open(app.href, '_blank');
+			if (app.link) {
+				//
+			}
+		};
+	};
 </script>
 
 <svelte:head>
@@ -23,81 +24,12 @@
 	/>
 </svelte:head>
 
-<section class="relative grid h-screen grid-rows-[1fr_auto] overflow-hidden">
-	<!-- Decorative background -->
-	<div class="pointer-events-none absolute inset-0 -z-10 h-screen bg-black">
-		<div class="absolute -top-32 -left-24 h-72 w-72 rounded-full bg-indigo-600/20 blur-3xl"></div>
-		<div
-			class="absolute -right-24 -bottom-24 h-72 w-72 rounded-full bg-fuchsia-500/20 blur-3xl"
-		></div>
-	</div>
-
-	<div class="mx-auto grid min-h-[80svh] max-w-7xl place-items-center px-6 py-20 sm:py-28 md:py-32">
-		<div class="text-center">
-			<h1 class="text-5xl font-bold tracking-tight text-balance sm:text-6xl md:text-7xl">
-				<span class="bg-gradient-to-br from-white to-slate-300 bg-clip-text text-transparent">
-					Joshua Enyi‑Christopher
-				</span>
-			</h1>
-
-			<p class="mt-4 text-lg text-pretty text-slate-300 sm:text-xl">
-				Software Engineer
-			</p>
-
-			<p
-				class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-pretty text-slate-400 sm:text-lg"
-			>
-				Building performant, intuitive, and user‑centered digital experiences with modern web technology.
-			</p>
-
-			<div class="mt-8 flex hidden flex-wrap items-center justify-center gap-2">
-				<span class="rounded-full border border-slate-700/70 px-3 py-1 text-xs text-slate-300">
-					Open to roles & freelance
-				</span>
-				<span class="rounded-full border border-slate-700/70 px-3 py-1 text-xs text-slate-300">
-					Remote‑friendly
-				</span>
-				<span class="rounded-full border border-slate-700/70 px-3 py-1 text-xs text-slate-300">
-					TypeScript • Svelte • Node
-				</span>
-			</div>
-		</div>
-	</div>
-
-	<footer class="grid-cols flex flex-col-reverse gap-4 p-4 text-sm md:flex-row">
-		<div class="flex-grow-1">
-			<p class="text-sm text-slate-500">
-				&copy; {year} ChrisJosh | Built with
-				<a class="underline" href="https://svelte.dev/docs/kit/introduction">SvelteKit</a> ❤️
-			</p>
-		</div>
-		<div class="flex flex-col items-center gap-4 md:flex-row">
-			{#each socials as social (social.label)}
-				<a
-					href={social.href}
-					target="_blank"
-					class="flex items-center gap-1 text-slate-400 transition hover:text-white"
-					aria-label={social.label}
-				>
-					<i class={social.icon}></i>
-					<span>{social.label}</span>
-				</a>
-			{/each}
-			<a
-				href="https://docs.google.com/document/d/1eEzF4OerbyvkHzUgnLfdpPt4NVeU6Z5PaxHIbBHHkHg/export?format=pdf"
-				download
-				class="flex items-center gap-1 text-slate-400 transition hover:text-white"
-				aria-label="Download CV"
-				on:click={() => {
-					// Lazy-import to keep this file SSR-safe and avoid bundling analytics in SSR
-					import('@vercel/analytics').then(({ track }) => {
-						track('cv_download', { location: 'footer', format: 'pdf' });
-					}).catch(() => {});
-				}}
-			>
-				<i class="devicon-google-plain"></i>
-				<span>Download CV</span>
-			</a>
-		</div>
-	</footer>
+<section
+	class="relative gap-2 inset-0 h-full w-full overflow-hidden"
+	bind:this={deskBoundArea}
+>
+	<DownloadCV {deskBoundArea} />
+	{#each apps as app (app.label)}
+		<OsEmblem icon={app.icon} {deskBoundArea} label={app.label} onClick={onDesktopClick(app)} />
+	{/each}
 </section>

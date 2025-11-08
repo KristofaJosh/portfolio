@@ -1,2 +1,23 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
+
+body {
+    font-family: "Stack Sans Notch", sans-serif;
+	font-optical-sizing: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+* {
+	/*outline: 1px dotted darkred;*/
+}
+
+.loading-cursor {
+	cursor: wait !important;
+}
+
+iconify-icon {
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+}
