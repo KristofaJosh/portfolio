@@ -1,16 +1,24 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import { deskAppsStore } from '$lib/stores/desktop-apps.svelte';
 	import Icon from '@iconify/svelte';
+	import * as localforage from 'localforage';
+	import { toLower } from 'ramda';
 	import { toast } from 'svelte-sonner';
-	import { Motion } from 'svelte-motion';
+	import { Motion, type PanInfo } from 'svelte-motion';
 	import { twcn } from '~/utils/twcn';
-	import { cursorState } from '$lib/components/download-cv/cursor.svelte.js';
+	import { desktopShortcutStore } from '$lib/stores/desktop-shortcut.svelte.js';
 
-	export let label = '';
-	export let icon = 'fxemoji:emptydocument';
-	export let onClick;
-	export let deskBoundArea;
-	export let className = '';
+	const {
+		label = '',
+		icon = 'fxemoji:emptydocument',
+		onClick,
+		deskBoundArea,
+		className,
+		group = 'others'
+	} = $props();
+
+	const labelId = toLower(`${label}_${crypto.randomUUID()}`);
 
 	let clickCount = 0;
 
@@ -24,13 +32,13 @@
 		if (onClick) onClick(e);
 	};
 
-	const watchSingleClicks = (event: MouseEvent) => {
-		event.preventDefault();
-		event.stopPropagation();
+	const watchSingleClicks = (e: MouseEvent) => {
+		e.preventDefault();
+		e.stopPropagation();
 
 		clickCount += 1;
 
-		if (clickCount > 2 && browser) {
+		if (clickCount > 1 && browser) {
 			toast.info('Double click to open', {
 				duration: 2000,
 				id: dblClickId,
@@ -39,6 +47,23 @@
 			});
 		}
 		return;
+	};
+
+	const handleDragEnd = (e: MouseEvent, info: PanInfo) => {
+		e.stopPropagation();
+		clickCount = 0;
+
+		const apps = deskAppsStore?.[group] ?? [];
+
+		apps.forEach((app) => {
+			if (!app.id) app.id = labelId;
+			desktopShortcutStore.iconPositions[app.id] = { x: info.point.x, y: info.point.y };
+		});
+
+		console.log($state.snapshot(desktopShortcutStore.iconPositions));
+
+		localforage.setItem('deskAppsStore', $state.snapshot(deskAppsStore));
+		localforage.setItem('desktopShortcutStore', $state.snapshot(desktopShortcutStore));
 	};
 </script>
 
@@ -50,10 +75,7 @@
 	dragTransition={{ bounceStiffness: 1000, bounceDamping: 30 }}
 	whileDrag={{ scale: 1.1 }}
 	whileTap={{ scale: 0.95 }}
-	onDragStart={(event, info) => console.log(info.point.x, info.point.y)}
-	onDragEnd={() => {
-		clickCount = 0;
-	}}
+	onDragEnd={handleDragEnd}
 >
 	<div
 		use:motion
@@ -65,7 +87,7 @@
 		<button
 			class={twcn(
 				'flex cursor-pointer flex-col items-center gap-1 text-white transition',
-				cursorState.isLoading && 'pointer-events-none'
+				desktopShortcutStore.isLoading && 'pointer-events-none'
 			)}
 			ondblclick={handleClick}
 			onclick={watchSingleClicks}

@@ -2,6 +2,7 @@ import posthog from 'posthog-js';
 import { browser } from '$app/environment';
 import { PUBLIC_POSTHOG_KEY } from '$env/static/public';
 import { dev } from '$app/environment';
+import localForage from 'localforage';
 
 export const load = async () => {
 	if (browser && !dev) {
@@ -12,9 +13,16 @@ export const load = async () => {
 			persistence: 'localStorage+cookie',
 			capture_pageview: false,
 			capture_pageleave: false,
-			capture_exceptions: true,
+			capture_exceptions: true
 		});
 	}
+
+	localForage.config({
+		name: 'KrisjOSh',
+		storeName: 'app_data',
+		description: 'Persistent storage for Portfolio OS app'
+	});
+
 	return;
 };
 load().finally();

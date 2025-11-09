@@ -4,12 +4,16 @@
 	import OsEmblem from '$lib/components/os-emblem.svelte';
 	import { appWindowStore } from '$lib/stores/app-window.svelte';
 	import { type DeskApps, deskAppsStore } from '$lib/stores/desktop-apps.svelte';
+	import { desktopShortcutStore } from '$lib/stores/desktop-shortcut.svelte';
 	import posthog from 'posthog-js';
 	import { twcn } from '~/utils/twcn';
 	import { toLower, replace } from 'ramda';
 
-	const apps = Object.values(deskAppsStore).flat();
 	let deskBoundArea;
+
+	const groupedApps = Object.entries(deskAppsStore).flatMap(([group, appList]) =>
+		appList.map((app) => ({ ...app, group }))
+	);
 
 	const onDesktopClick = (app: DeskApps) => {
 		if (app.wip && app.wip.enabled) {
@@ -23,6 +27,8 @@
 			if ('link' in app) appWindowStore.open(app.windowObject);
 		};
 	};
+
+	const c = desktopShortcutStore.iconPositions;
 </script>
 
 <svelte:head>
@@ -34,14 +40,13 @@
 </svelte:head>
 
 <section class="relative inset-0 h-full w-full gap-2 overflow-hidden" bind:this={deskBoundArea}>
-	{#each apps as app (app.label)}
+	{#each groupedApps as app (app.label)}
 		<OsEmblem
-			icon={app.icon}
 			{deskBoundArea}
-			label={app.label}
+			{...app}
 			className={twcn(app.wip && app.wip.enabled ? 'opacity-50 pointer-events-none' : '')}
 			onClick={onDesktopClick(app)}
 		/>
 	{/each}
-    <DownloadCV {deskBoundArea} />
+	<DownloadCV {deskBoundArea} />
 </section>

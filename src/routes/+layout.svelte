@@ -2,10 +2,15 @@
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import { dev } from '$app/environment';
-	import { cursorState } from '$lib/components/download-cv/cursor.svelte';
+	import { type DeskApps, deskAppsStore } from '$lib/stores/desktop-apps.svelte';
+	import {
+		type DesktopShortcut,
+		desktopShortcutStore
+	} from '$lib/stores/desktop-shortcut.svelte.js';
 	import { injectAnalytics } from '@vercel/analytics/sveltekit';
 	import Header from '$lib/components/header.svelte';
 	import Footer from '$lib/components/footer.svelte';
+	import localforage from 'localforage';
 	import { twcn } from '~/utils/twcn';
 	import { Toaster } from 'svelte-sonner';
 
@@ -18,6 +23,23 @@
 	if (browser) {
 		// beforeNavigate(() => posthog.capture('$pageleave'));
 		afterNavigate(() => posthog.capture('$pageview'));
+
+		async function updateStores() {
+			const [appStore, shortcutStore] = await Promise.all([
+				localforage.getItem<DeskApps>('deskAppsStore'),
+				localforage.getItem<DesktopShortcut>('desktopShortcutStore')
+			]);
+
+			if (shortcutStore) {
+				desktopShortcutStore.iconPositions = shortcutStore.iconPositions;
+			}
+			if (appStore) {
+				Object.entries(appStore).forEach(([key, shortcut]) => {
+					deskAppsStore[key] = shortcut;
+				});
+			}
+		}
+		updateStores();
 	}
 
 	let { children } = $props();
@@ -30,7 +52,7 @@
 <section
 	class={twcn(
 		'relative grid h-dvh grid-rows-[auto_1fr] overflow-hidden md:h-screen',
-		cursorState.isLoading && 'loading-cursor'
+		desktopShortcutStore.isLoading && 'loading-cursor'
 	)}
 >
 	<div class="pointer-events-none absolute inset-0 -z-10 h-screen bg-black">
@@ -44,5 +66,5 @@
 		{@render children?.()}
 	</main>
 	<Footer />
-	<Toaster position="top-right" />
+	<Toaster  position="top-center"  offset="50px" />
 </section>

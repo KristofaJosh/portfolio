@@ -1,11 +1,10 @@
 <script lang="ts">
-	import { cursorState } from '$lib/components/download-cv/cursor.svelte';
+	import { desktopShortcutStore } from '$lib/stores/desktop-shortcut.svelte.js';
 	import OsEmblem from '$lib/components/os-emblem.svelte';
 	import posthog from 'posthog-js';
 
-	const onDownloadClick = async (event: MouseEvent) => {
-		event.preventDefault();
-		cursorState.isLoading = true;
+	const onDownloadClick = async () => {
+		desktopShortcutStore.isLoading = true;
 		try {
 			const response = await fetch(
 				'https://docs.google.com/document/d/1eEzF4OerbyvkHzUgnLfdpPt4NVeU6Z5PaxHIbBHHkHg/export?format=pdf'
@@ -25,7 +24,7 @@
 		} catch {
 			// TODO: track error
 		} finally {
-			cursorState.isLoading = false;
+			desktopShortcutStore.isLoading = false;
 		}
 	};
 

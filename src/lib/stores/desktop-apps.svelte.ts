@@ -3,6 +3,7 @@ import { funProjectWindow } from '$lib/windows/fun-project';
 import { liveProjectWindow } from '$lib/windows/live-project';
 
 type BaseType = {
+	id?: string;
 	label: string;
 	icon: string;
 	wip?: {

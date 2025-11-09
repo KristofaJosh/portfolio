@@ -30,10 +30,11 @@ type AppWindowStoreI = {
 import { writable } from 'svelte/store';
 
 function createStore() {
-	const { subscribe, update } = writable<AppWindowStoreI>();
+	const { subscribe, update, set } = writable<AppWindowStoreI>();
 
 	return {
 		subscribe,
+		set,
 		maximize: (window: AppWindowI) => {
 			update((store) => {
 				store.active = {
