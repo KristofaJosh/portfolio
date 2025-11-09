@@ -3,13 +3,14 @@ import * as auth from '$lib/server/auth';
 import type { Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
-const handleParaglide: Handle = ({ event, resolve }) => paraglideMiddleware(event.request, ({ request, locale }) => {
-	event.request = request;
+const handleParaglide: Handle = ({ event, resolve }) =>
+	paraglideMiddleware(event.request, ({ request, locale }) => {
+		event.request = request;
 
-	return resolve(event, {
-		transformPageChunk: ({ html }) => html.replace('%paraglide.lang%', locale)
+		return resolve(event, {
+			transformPageChunk: ({ html }) => html.replace('%paraglide.lang%', locale)
+		});
 	});
-});
 
 const handleAuth: Handle = async ({ event, resolve }) => {
 	const sessionToken = event.cookies.get(auth.sessionCookieName);
@@ -61,11 +62,13 @@ const handlePH: Handle = async ({ event, resolve }) => {
 			method: event.request.method,
 			headers,
 			body: event.request.body,
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-expect-error
 			duplex: 'half'
 		});
 	}
 
 	return await resolve(event);
-}
+};
 
 export const handle: Handle = sequence(handleParaglide, handleAuth, handlePH);

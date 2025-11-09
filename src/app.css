@@ -2,7 +2,7 @@
 @plugin '@tailwindcss/typography';
 
 body {
-    font-family: "Stack Sans Notch", sans-serif;
+	font-family: 'Stack Sans Notch', sans-serif;
 	font-optical-sizing: auto;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;

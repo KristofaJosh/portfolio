@@ -1,9 +1,7 @@
 <script>
 </script>
 
-<div
-	class="mx-auto grid min-h-[80svh] max-w-7xl place-items-center px-6 py-20 sm:py-28 md:py-32"
->
+<div class="mx-auto grid min-h-[80svh] max-w-7xl place-items-center px-6 py-20 sm:py-28 md:py-32">
 	<div class="text-center">
 		<h1 class="text-5xl font-bold tracking-tight text-balance sm:text-6xl md:text-7xl">
 			<span class="bg-gradient-to-br from-white to-slate-300 bg-clip-text text-transparent">

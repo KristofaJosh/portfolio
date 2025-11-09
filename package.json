@@ -32,6 +32,7 @@
 		"@tailwindcss/typography": "^0.5.18",
 		"@tailwindcss/vite": "^4.1.17",
 		"@types/node": "^24.10.0",
+		"@types/ramda": "^0.31.1",
 		"@vitest/browser": "^4.0.8",
 		"drizzle-kit": "^0.31.6",
 		"drizzle-orm": "^0.44.7",
@@ -64,7 +65,9 @@
 		"posthog-js": "^1.290.0",
 		"posthog-node": "^5.11.2",
 		"radix-svelte": "^0.9.0",
+		"ramda": "^0.32.0",
 		"svelte-motion": "^0.12.2",
+		"svelte-sonner": "^1.0.5",
 		"tailwind-merge": "^3.3.1"
 	}
 }

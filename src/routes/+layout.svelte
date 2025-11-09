@@ -7,6 +7,7 @@
 	import Header from '$lib/components/header.svelte';
 	import Footer from '$lib/components/footer.svelte';
 	import { twcn } from '~/utils/twcn';
+	import { Toaster } from 'svelte-sonner';
 
 	import posthog from 'posthog-js';
 	import { browser } from '$app/environment';
@@ -43,4 +44,5 @@
 		{@render children?.()}
 	</main>
 	<Footer />
+	<Toaster position="top-right" />
 </section>

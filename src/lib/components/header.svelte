@@ -8,7 +8,7 @@
 
 	function updateTime() {
 		const now = new Date();
-        currentTime = format(now, 'hh:mm a');
+		currentTime = format(now, 'hh:mm a');
 	}
 
 	onMount(() => {
@@ -18,11 +18,16 @@
 	});
 </script>
 
-<header class={twcn('grid grid-cols-[1fr_auto] items-center gap-4 px-4 py-2', 'bg-white/10 backdrop-blur-2xl text-white  text-sm')}>
-	<div class="flex items-center w-full gap-6">
+<header
+	class={twcn(
+		'grid grid-cols-[1fr_auto] items-center gap-4 px-4 py-2',
+		'bg-white/10 text-sm text-white  backdrop-blur-2xl'
+	)}
+>
+	<div class="flex w-full items-center gap-6">
 		<p>Krisj<span class="font-semibold">OS</span>h</p>
-		<div class="flex gap-4 items-center flex-grow-1">
-<!--            <a href="#">Blog</a>-->
+		<div class="flex flex-grow-1 items-center gap-4">
+			<!--            <a href="#">Blog</a>-->
 		</div>
 	</div>
 	<div>

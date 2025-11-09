@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { Popper } from 'radix-svelte';
-	import type { ResolvedProps } from 'radix-svelte';
+	import { Popper } from 'radix-svelte/internal/components/Popper';
 
 	let arrowWidth: number = 10;
 	let arrowHeight: number = 5;
@@ -15,9 +14,6 @@
 	let contentAvoidCollisions: boolean = true;
 
 	let open = false;
-
-    const {children} = $props();
-
 </script>
 
 <div class="grid place-items-center">

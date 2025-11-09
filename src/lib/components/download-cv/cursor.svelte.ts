@@ -1,3 +1,3 @@
 export const cursorState = $state({
-	isLoading: false,
+	isLoading: false
 });

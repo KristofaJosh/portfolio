@@ -1,9 +1,18 @@
+import type { AppWindowI } from '$lib/stores/app-window.svelte';
+import { funProjectWindow } from '$lib/windows/fun-project';
+import { liveProjectWindow } from '$lib/windows/live-project';
+
 type BaseType = {
 	label: string;
 	icon: string;
+	wip?: {
+		enabled: boolean;
+		note: string;
+	};
 };
 interface InternalLink extends BaseType {
 	link: string;
+	windowObject: AppWindowI;
 }
 
 interface ExternalLink extends BaseType {
@@ -33,17 +42,27 @@ export const socials = [
 export const projects = [
 	{
 		label: 'Fun Projects',
-		link: 'https://github.com/KristofaJosh',
-		icon: 'material-icon-theme:folder-vm'
+		link: '/fun-projects',
+		windowObject: funProjectWindow,
+		icon: 'material-icon-theme:folder-vm',
+		wip: {
+			enabled: false,
+			note: 'Update in progress...'
+		}
 	},
 	{
 		label: 'Live Projects',
-		link: 'https://github.com/KristofaJosh',
-		icon: 'material-icon-theme:folder-ui'
+		link: '/live-projects',
+		windowObject: liveProjectWindow,
+		icon: 'material-icon-theme:folder-ui',
+		wip: {
+			enabled: false,
+			note: 'Update in progress...'
+		}
 	}
 ];
 
-export const deskApps = $state({
+export const deskAppsStore = $state({
 	socials,
 	other: [],
 	projects

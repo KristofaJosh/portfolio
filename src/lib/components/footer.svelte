@@ -5,10 +5,10 @@
 <div class="relative mx-auto w-full max-w-[80%]">
 	<footer
 		class={twcn(
-			'relative z-10 grid w-full items-center rounded-lg p-6 gap-6',
+			'relative z-10 grid w-full items-center gap-6 rounded-lg p-6',
 			'grid-cols-[auto_auto_1fr] text-white',
-			'transform -translate-y-8',
-			'mx-4 hidden',
+			'-translate-y-8 transform',
+			'mx-4 hidden'
 		)}
 		style="perspective: 390px;"
 	>
@@ -24,6 +24,6 @@
 	.dock {
 		transform: perspective(390px) rotateX(48deg);
 		position: absolute;
-        height: 60px;
+		height: 60px;
 	}
 </style>
