@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import DownloadCV from '$lib/components/download-cv/cv.svelte';
 	import OsEmblem from '$lib/components/os-emblem.svelte';
 	import { appWindowStore } from '$lib/stores/app-window.svelte';
 	import { type DeskApps, deskAppsStore } from '$lib/stores/desktop-apps.svelte';
@@ -22,9 +21,30 @@
 
 		const evt = replace(/ /g, '_', toLower(`${app.label}_clicked`));
 		if (browser) posthog.capture(evt);
-		return () => {
+		return async () => {
 			if ('href' in app) window.open(app.href, '_blank');
 			if ('link' in app) appWindowStore.open(app.windowObject);
+			if ('download' in app) {
+				posthog.capture(`${app.download.title}_download_clicked`);
+				desktopShortcutStore.isLoading = true;
+				try {
+					const response = await fetch(app.download.link);
+					const blob = await response.blob();
+					const url = URL.createObjectURL(blob);
+
+					const a = document.createElement('a');
+					a.href = url;
+					a.download = app.download.title;
+					document.body.appendChild(a);
+					a.click();
+					a.remove();
+					URL.revokeObjectURL(url);
+				} catch {
+					// TODO: track error
+				} finally {
+					desktopShortcutStore.isLoading = false;
+				}
+			}
 		};
 	};
 
@@ -48,5 +68,4 @@
 			onClick={onDesktopClick(app)}
 		/>
 	{/each}
-	<DownloadCV {deskBoundArea} />
 </section>

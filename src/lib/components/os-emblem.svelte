@@ -2,10 +2,10 @@
 	import { browser } from '$app/environment';
 	import { deskAppsStore } from '$lib/stores/desktop-apps.svelte';
 	import Icon from '@iconify/svelte';
-	import * as localforage from 'localforage';
-	import { toLower } from 'ramda';
+	import localforage from 'localforage';
 	import { toast } from 'svelte-sonner';
 	import { Motion, type PanInfo } from 'svelte-motion';
+	import { getLabelId } from '~/utils/get-label-id';
 	import { twcn } from '~/utils/twcn';
 	import { desktopShortcutStore } from '$lib/stores/desktop-shortcut.svelte.js';
 
@@ -14,11 +14,11 @@
 		icon = 'fxemoji:emptydocument',
 		onClick,
 		deskBoundArea,
-		className,
+		className = '',
 		group = 'others'
 	} = $props();
 
-	const labelId = toLower(`${label}_${crypto.randomUUID()}`);
+	const labelId = getLabelId(label);
 
 	let clickCount = 0;
 
@@ -49,21 +49,35 @@
 		return;
 	};
 
-	const handleDragEnd = (e: MouseEvent, info: PanInfo) => {
+	const handleDragEnd = async (e: MouseEvent, info: PanInfo) => {
 		e.stopPropagation();
 		clickCount = 0;
 
-		const apps = deskAppsStore?.[group] ?? [];
+		const deskApp = $state.snapshot(deskAppsStore);
+		const appGroup = deskApp[group] ?? [];
 
-		apps.forEach((app) => {
-			if (!app.id) app.id = labelId;
-			desktopShortcutStore.iconPositions[app.id] = { x: info.point.x, y: info.point.y };
-		});
+		const isModified = appGroup.find(
+			(x: { id?: string; label: string }) => x.label === label && x.id
+		);
 
-		console.log($state.snapshot(desktopShortcutStore.iconPositions));
+		if (!isModified) {
+			appGroup.forEach((x: { label: string; id?: string }) => {
+				if (x.label === label) x.id = labelId;
+			});
+			deskAppsStore[group] = appGroup;
+			desktopShortcutStore.iconPositions[labelId] = { x: info.point.x, y: info.point.y };
+		} else if (isModified && isModified.id) {
+			console.log('Updating position for', isModified.id);
+			const id = isModified.id;
+			desktopShortcutStore.iconPositions[id] = { x: info.point.x, y: info.point.y };
+		}
 
-		localforage.setItem('deskAppsStore', $state.snapshot(deskAppsStore));
-		localforage.setItem('desktopShortcutStore', $state.snapshot(desktopShortcutStore));
+		try {
+			await localforage.setItem('deskAppsStore', $state.snapshot(deskAppsStore));
+			await localforage.setItem('desktopShortcutStore', $state.snapshot(desktopShortcutStore));
+		} catch (err) {
+			console.error('Failed to persist stores:', err);
+		}
 	};
 </script>
 

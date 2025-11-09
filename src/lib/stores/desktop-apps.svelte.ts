@@ -11,6 +11,7 @@ type BaseType = {
 		note: string;
 	};
 };
+
 interface InternalLink extends BaseType {
 	link: string;
 	windowObject: AppWindowI;
@@ -20,7 +21,14 @@ interface ExternalLink extends BaseType {
 	href: string;
 }
 
-export type DeskApps = InternalLink | ExternalLink;
+interface DownloadLink extends BaseType {
+	download: {
+		link: string;
+		title: string;
+	};
+}
+
+export type DeskApps = InternalLink | ExternalLink | DownloadLink;
 
 export const socials = [
 	{
@@ -63,8 +71,19 @@ export const projects = [
 	}
 ];
 
+const others = [
+	{
+		download: {
+			link: 'https://docs.google.com/document/d/1eEzF4OerbyvkHzUgnLfdpPt4NVeU6Z5PaxHIbBHHkHg/export?format=pdf',
+			title: 'Chris_Josh_CV.pdf'
+		},
+		label: 'download CV',
+		icon: 'tabler:file-cv-filled'
+	}
+];
+
 export const deskAppsStore = $state({
 	socials,
-	other: [],
+	others,
 	projects
 } as Record<string, DeskApps[]>);

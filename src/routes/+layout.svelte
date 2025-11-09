@@ -30,6 +30,9 @@
 				localforage.getItem<DesktopShortcut>('desktopShortcutStore')
 			]);
 
+			console.log('appStore', appStore);
+			console.log('shortcutStore', shortcutStore);
+
 			if (shortcutStore) {
 				desktopShortcutStore.iconPositions = shortcutStore.iconPositions;
 			}
@@ -66,5 +69,5 @@
 		{@render children?.()}
 	</main>
 	<Footer />
-	<Toaster  position="top-center"  offset="50px" />
+	<Toaster position="top-center" offset="50px" />
 </section>
