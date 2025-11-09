@@ -55,7 +55,7 @@ export const projects = [
 		windowObject: funProjectWindow,
 		icon: 'material-icon-theme:folder-vm',
 		wip: {
-			enabled: false,
+			enabled: true,
 			note: 'Update in progress...'
 		}
 	},
@@ -65,7 +65,7 @@ export const projects = [
 		windowObject: liveProjectWindow,
 		icon: 'material-icon-theme:folder-ui',
 		wip: {
-			enabled: false,
+			enabled: true,
 			note: 'Update in progress...'
 		}
 	}
