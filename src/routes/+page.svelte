@@ -34,8 +34,6 @@
 </svelte:head>
 
 <section class="relative inset-0 h-full w-full gap-2 overflow-hidden" bind:this={deskBoundArea}>
-	<span>{$appWindowStore}</span>
-	<DownloadCV {deskBoundArea} />
 	{#each apps as app (app.label)}
 		<OsEmblem
 			icon={app.icon}
@@ -45,4 +43,5 @@
 			onClick={onDesktopClick(app)}
 		/>
 	{/each}
+    <DownloadCV {deskBoundArea} />
 </section>

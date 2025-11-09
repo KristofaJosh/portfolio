@@ -1,9 +1,10 @@
 import posthog from 'posthog-js';
 import { browser } from '$app/environment';
 import { PUBLIC_POSTHOG_KEY } from '$env/static/public';
+import { dev } from '$app/environment';
 
 export const load = async () => {
-	if (browser) {
+	if (browser && !dev) {
 		posthog.init(PUBLIC_POSTHOG_KEY, {
 			api_host: '/internal-ph',
 			ui_host: 'https://eu.posthog.com',
@@ -11,7 +12,7 @@ export const load = async () => {
 			persistence: 'localStorage+cookie',
 			capture_pageview: false,
 			capture_pageleave: false,
-			capture_exceptions: true
+			capture_exceptions: true,
 		});
 	}
 	return;

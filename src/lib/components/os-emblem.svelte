@@ -50,13 +50,17 @@
 	dragTransition={{ bounceStiffness: 1000, bounceDamping: 30 }}
 	whileDrag={{ scale: 1.1 }}
 	whileTap={{ scale: 0.95 }}
+	onDragStart={(event, info) => console.log(info.point.x, info.point.y)}
 	onDragEnd={() => {
 		clickCount = 0;
 	}}
 >
 	<div
 		use:motion
-		class={twcn('mb-5 flex h-fit w-full max-w-20 min-w-14 flex-col items-center', className)}
+		class={twcn(
+			'ph-no-rageclick mb-5 flex h-fit w-full max-w-20 min-w-14 flex-col items-center',
+			className
+		)}
 	>
 		<button
 			class={twcn(
