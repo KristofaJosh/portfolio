@@ -18,8 +18,8 @@ export const load = async () => {
 	}
 
 	localForage.config({
-		name: 'KrisjOSh',
-		storeName: 'app_data',
+		name: 'chrisjosh_portfolio',
+		storeName: 'portfolio_os_app_data',
 		description: 'Persistent storage for Portfolio OS app'
 	});
 

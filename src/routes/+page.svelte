@@ -47,8 +47,6 @@
 			}
 		};
 	};
-
-	const c = desktopShortcutStore.iconPositions;
 </script>
 
 <svelte:head>

@@ -50,6 +50,7 @@
 	};
 
 	const handleDragEnd = async (e: MouseEvent, info: PanInfo) => {
+		console.log(e.detail.x);
 		e.stopPropagation();
 		clickCount = 0;
 
@@ -79,6 +80,13 @@
 			console.error('Failed to persist stores:', err);
 		}
 	};
+
+	let initialPosition = $state({ x: 0, y: 0 });
+
+	$effect.pre(() => {
+		const initialPositionId = deskAppsStore[group].find((x) => x.id)?.id;
+		if (initialPositionId) initialPosition = desktopShortcutStore.iconPositions[initialPositionId];
+	});
 </script>
 
 <Motion
@@ -90,6 +98,7 @@
 	whileDrag={{ scale: 1.1 }}
 	whileTap={{ scale: 0.95 }}
 	onDragEnd={handleDragEnd}
+	initial={false}
 >
 	<div
 		use:motion
